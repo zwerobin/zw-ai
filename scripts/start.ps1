@@ -22,13 +22,10 @@ Get-Content ".env" | ForEach-Object {
     Set-Item -Path "Env:$name" -Value $value
 }
 
-if (-not $env:GEMINI_API_KEY) {
-    Write-Error "GEMINI_API_KEY fehlt in .env. Key holen: https://aistudio.google.com/apikey"
+if (-not $env:OPENAI_API_KEYS) {
+    Write-Error "OPENAI_API_KEYS fehlt in .env (Gemini/Groq-Keys, ';'-getrennt)."
     exit 1
 }
-
-# Open WebUI nimmt die erste Verbindung aus OPENAI_API_BASE_URL/OPENAI_API_KEY.
-$env:OPENAI_API_KEY = $env:GEMINI_API_KEY
 
 if (-not (Get-Command uvx -ErrorAction SilentlyContinue)) {
     Write-Error "uv/uvx nicht gefunden. Installieren:  powershell -ExecutionPolicy ByPass -c `"irm https://astral.sh/uv/install.ps1 | iex`"  (danach Terminal neu starten)"

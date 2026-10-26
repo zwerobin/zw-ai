@@ -21,12 +21,14 @@ eingetragen – der Rest bleibt gleich.
   curl -LsSf https://astral.sh/uv/install.sh | sh
   source $HOME/.local/bin/env   # oder neue Shell öffnen
   ```
-- Ein kostenloser **Gemini-API-Key**: https://aistudio.google.com/apikey
+- Ein kostenloser **API-Key**, mind. einer von:
+  - Gemini: https://aistudio.google.com/apikey
+  - Groq: https://console.groq.com/keys
 
 ## Start
 ```bash
 cp .env.example .env            # einmalig
-# in .env eintragen: GEMINI_API_KEY=...  und  WEBUI_SECRET_KEY=$(openssl rand -hex 32)
+# in .env eintragen: OPENAI_API_KEYS=<gemini>;<groq>  und  WEBUI_SECRET_KEY=$(openssl rand -hex 32)
 bash scripts/start.sh
 ```
 Dann http://localhost:8080 öffnen. Der **erste registrierte Nutzer wird Admin**.
@@ -41,14 +43,22 @@ Copy-Item .env.example .env   # einmalig, dann .env ausfüllen
 powershell -ExecutionPolicy Bypass -File scripts\start.ps1
 ```
 
-## Modell wählen / Verbindung prüfen
-Beim ersten Start wird aus `OPENAI_API_BASE_URL` + `GEMINI_API_KEY` eine
-OpenAI-Verbindung angelegt. Falls kein Modell erscheint:
-**Avatar → Einstellungen → Admin → Verbindungen** öffnen, dort die Verbindung
-kontrollieren (URL endet auf `/v1beta/openai/`, Key = Gemini-Key). Im Chat oben
-ein Gemini-Modell wählen, z. B. `gemini-3.8-flash` (kostenlos, tool-fähig).
-Hinweis: Google schaltet ältere Modellnamen für neue Keys ab – wenn ein 404
-„no longer available" kommt, im Dropdown das aktuelle Flash-Modell wählen.
+## Mehrere Anbieter (Gemini + Groq)
+Open WebUI legt beim **ersten** Start je Eintrag in `OPENAI_API_BASE_URLS` /
+`OPENAI_API_KEYS` eine Verbindung an und zeigt **alle Modelle gemeinsam im
+Dropdown** – du wählst pro Chat, z. B. `gemini-3.8-flash` (Gemini) oder ein
+Llama-Modell (Groq).
+
+**Wichtiger Haken (persistente Konfiguration):** Verbindungen werden nach dem
+ersten Start in `data/webui.db` gespeichert und haben dann **Vorrang vor der
+.env**. Änderst du die Keys/URLs in der `.env` nachträglich, greifen sie nicht
+automatisch. Dann entweder:
+- die Verbindung direkt in **Avatar → Einstellungen → Admin → Verbindungen**
+  anpassen/ergänzen, **oder**
+- `data/` löschen (frischer Start – re-seeded aus der .env, aber Account/Chats weg).
+
+Hinweis: Google schaltet ältere Modellnamen für neue Keys ab – bei einem 404
+„no longer available" im Dropdown das aktuelle Flash-Modell wählen.
 
 ## Modell später austauschen
 Nicht neu bauen – nur eine Verbindung ergänzen/ändern unter

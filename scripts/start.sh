@@ -14,13 +14,10 @@ fi
 # .env laden (alle Zuweisungen exportieren)
 set -a; . ./.env; set +a
 
-if [ -z "${GEMINI_API_KEY:-}" ]; then
-  echo "GEMINI_API_KEY fehlt in .env. Key holen: https://aistudio.google.com/apikey" >&2
+if [ -z "${OPENAI_API_KEYS:-}" ]; then
+  echo "OPENAI_API_KEYS fehlt in .env (Gemini/Groq-Keys, ';'-getrennt)." >&2
   exit 1
 fi
-
-# Open WebUI nimmt die erste Verbindung aus OPENAI_API_BASE_URL/OPENAI_API_KEY.
-export OPENAI_API_KEY="$GEMINI_API_KEY"
 
 if ! command -v uvx >/dev/null 2>&1; then
   echo "uv/uvx nicht gefunden. Einmalig installieren:" >&2
