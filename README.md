@@ -31,6 +31,16 @@ bash scripts/start.sh
 ```
 Dann http://localhost:8080 öffnen. Der **erste registrierte Nutzer wird Admin**.
 
+### Windows (PowerShell)
+```powershell
+# uv einmalig installieren, danach Terminal neu starten:
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+Copy-Item .env.example .env   # einmalig, dann .env ausfüllen
+# WEBUI_SECRET_KEY erzeugen:  python -c "import secrets; print(secrets.token_hex(32))"
+powershell -ExecutionPolicy Bypass -File scripts\start.ps1
+```
+
 ## Modell wählen / Verbindung prüfen
 Beim ersten Start wird aus `OPENAI_API_BASE_URL` + `GEMINI_API_KEY` eine
 OpenAI-Verbindung angelegt. Falls kein Modell erscheint:
