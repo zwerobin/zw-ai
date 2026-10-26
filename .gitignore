@@ -1,0 +1,10 @@
+# Open-WebUI-Daten (SQLite, Uploads, Vektoren) – nie einchecken
+data/
+
+# Geheimnisse und lokale Konfiguration
+.env
+.webui_secret_key
+
+# uv / Python
+.venv/
+__pycache__/
