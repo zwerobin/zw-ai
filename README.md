@@ -46,7 +46,9 @@ Beim ersten Start wird aus `OPENAI_API_BASE_URL` + `GEMINI_API_KEY` eine
 OpenAI-Verbindung angelegt. Falls kein Modell erscheint:
 **Avatar → Einstellungen → Admin → Verbindungen** öffnen, dort die Verbindung
 kontrollieren (URL endet auf `/v1beta/openai/`, Key = Gemini-Key). Im Chat oben
-ein Gemini-Modell wählen, z. B. `gemini-2.5-flash` (kostenlos, tool-fähig).
+ein Gemini-Modell wählen, z. B. `gemini-3.8-flash` (kostenlos, tool-fähig).
+Hinweis: Google schaltet ältere Modellnamen für neue Keys ab – wenn ein 404
+„no longer available" kommt, im Dropdown das aktuelle Flash-Modell wählen.
 
 ## Modell später austauschen
 Nicht neu bauen – nur eine Verbindung ergänzen/ändern unter
